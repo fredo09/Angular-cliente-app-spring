@@ -1,0 +1,74 @@
+<ul class="alert alert-danger" *ngIf="Errores?.length > 0">
+  <li *ngFor="let err of Errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="container " style="margin-top: 10px;">
+<div class="card bg-dark text-white m-10">
+  <div class="card-header">{{ titulo }}</div>
+    <div class="card-body">
+      <form #clienteForm="ngForm">
+        <div class="form-group row">
+          <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+          <div class="col-sm-6"> 
+            <input type="text" class="form-control" [(ngModel)]="Cliente.nombre" name="nombre" #nombre="ngModel"> <!-- required minlength="8"-->
+            <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched) "> 
+              <div *ngIf="nombre.errors.required">
+                <h1>El Nombre es requerido</h1>
+              </div>
+              <div *ngIf="nombre.errors.minlength">
+                <h1>El Nombre debe de ser minimo 8 caracteres</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+          <div class="col-sm-6"> 
+            <input type="text" class="form-control" [(ngModel)]="Cliente.apellido" name="apellido" #apellido="ngModel" minlength="5">
+            <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched) "> 
+              <div *ngIf="apellido.errors.minlength">
+                <h1>El Apellido debe de ser minimo 8 caracteres</h1>
+              </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="form-group row ml-20">
+          <label for="email" class="col-form-label col-sm-2">Email</label>
+          <div class="col-sm-6"> 
+            <input type="text" class="form-control" type="email" [(ngModel)]="Cliente.email" name="email">
+          </div>
+        </div>
+    <!--
+        <div class="form-group row">
+          <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
+          <div class="col-sm-6"> 
+            <input [matDatepicker]="myDatepicker" class="form-control" [(ngModel)]="Cliente.createAt" name="createAt">
+            <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker></mat-datepicker>
+        </div>
+      </div>
+    -->
+      <div class="form-group row">
+        <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
+        <div class="col-sm-6">
+          <input [matDatepicker]="miDatepicker" class="form-control" [(ngModel)]="Cliente.createAt" name="createAt" style="display:inline; width:300px;">
+          <mat-datepicker-toggle [for]="miDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #miDatepicker></mat-datepicker>
+        </div>
+      </div>
+
+        <div class="form-group row ml-20">
+          <button class="btn btn-primary" (click)="create()" *ngIf="!Cliente.id else elseBlock" [disabled]="!clienteForm.form.valid">Crear</button>
+          
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" (click)="actualizarCliente()" [disabled]="!clienteForm.form.valid">Editar</button>
+          </ng-template>
+        </div >
+      </form>
+    </div>
+</div>
+</div>
